@@ -2,6 +2,15 @@
 
 Check-IA Mobile is organized around Expo Router routes, reusable feature components, and a small API service layer.
 
+## System Diagram
+
+<figure class="checkia-diagram">
+  <img src="../assets/mobile-architecture.png" alt="Check-IA Mobile architecture diagram" />
+  <figcaption>
+    Editable source: <a href="../assets/mobile-architecture.excalidraw">mobile-architecture.excalidraw</a>
+  </figcaption>
+</figure>
+
 ## Main Areas
 
 - `app/` contains Expo Router routes and screens.
