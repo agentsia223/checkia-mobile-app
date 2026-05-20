@@ -1,0 +1,83 @@
+// app/(tabs)/index.tsx
+import { useEffect, useState } from 'react';
+import { ScrollView, ActivityIndicator, StatusBar, View, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
+import { P } from '../../constants/colors';
+import { s } from '../../styles/home.styles';
+import { FactCheck } from '../../data/homeData';
+import { factCheckAPI } from '../../services/api';
+import { mapSubmissionToFactCheck } from '../../utils/apiMappers';
+import { useCurrentUser } from '../../hooks/useCurrentUser';
+
+import { HomeHeader } from '../../components/home/HomeHeader';
+import { HomeHero } from '../../components/home/HomeHero';
+import { HistoryRow } from '../../components/home/HistoryRow';
+
+export default function HomeScreen() {
+  const router = useRouter();
+  const { user } = useCurrentUser();
+  const [history, setHistory] = useState<FactCheck[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      const { data } = await factCheckAPI.getHistory();
+      const items = data
+        .map(mapSubmissionToFactCheck)
+        .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+      setHistory(items.slice(0, 5));
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <SafeAreaView style={s.safe}>
+      <StatusBar barStyle="dark-content" />
+      <ScrollView
+        style={s.screen}
+        contentContainerStyle={[s.container, { paddingBottom: 100 }]}
+        showsVerticalScrollIndicator={false}
+      >
+        <HomeHeader name={user.firstName} initials={user.initials} />
+        <HomeHero />
+
+        <View style={s.sectionHeader}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={s.sectionTitle}>Récentes</Text>
+            <Text style={s.sectionCount}>{history.length}</Text>
+          </View>
+          <TouchableOpacity onPress={() => router.push('/history')}>
+            <Text style={s.sectionLink}>Faits vérifiés</Text>
+          </TouchableOpacity>
+        </View>
+
+        {loading ? (
+          <ActivityIndicator color={P.navy} style={{ marginTop: 20 }} />
+        ) : history.length === 0 ? (
+          <Text style={{ color: P.muted, fontSize: 14, marginTop: 12, lineHeight: 21 }}>
+            Aucune vérification pour le moment. Lancez-en une depuis l'onglet Vérifier.
+          </Text>
+        ) : (
+          history.map((item, i) => (
+            <HistoryRow
+              key={item.id}
+              item={item}
+              isLast={i === history.length - 1}
+              onPress={() => router.push(`/result/${item.id}?kind=text`)}
+            />
+          ))
+        )}
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
