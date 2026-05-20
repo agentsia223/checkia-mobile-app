@@ -1,12 +1,12 @@
 ---
-name: Bug report
-about: Report a reproducible problem in the mobile app
+name: Bug Report
+about: Report a reproducible problem in Check-IA Mobile
 title: "bug: "
 labels: bug
 assignees: ""
 ---
 
-## Summary
+## Description
 
 Describe the problem clearly.
 
@@ -31,7 +31,13 @@ What happens instead?
 - npm:
 - Expo target: Android / iOS / web / Expo Go
 - Device or simulator:
+- App version or commit:
+- Backend URL type: local / LAN / tunnel / production
 
 ## Logs or Screenshots
 
 Paste relevant logs or attach screenshots.
+
+## Additional Context
+
+Add backend assumptions, account state, or related issues if useful.

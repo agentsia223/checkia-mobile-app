@@ -6,12 +6,12 @@
   "main": "expo-router/entry",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/immerSIR/checkia-mobile.git"
+    "url": "git+https://github.com/agentsia223/checkia-mobile-app.git"
   },
   "bugs": {
-    "url": "https://github.com/immerSIR/checkia-mobile/issues"
+    "url": "https://github.com/agentsia223/checkia-mobile-app/issues"
   },
-  "homepage": "https://github.com/immerSIR/checkia-mobile#readme",
+  "homepage": "https://github.com/agentsia223/checkia-mobile-app#readme",
   "engines": {
     "node": ">=20.19.4",
     "npm": ">=10"
@@ -62,10 +62,23 @@
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
     ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/.context/"
+    ],
     "collectCoverage": true,
     "collectCoverageFrom": [
+      "app/**/*.{ts,tsx}",
       "components/**/*.{ts,tsx}",
-      "!components/**/index.{ts,tsx}"
+      "constants/**/*.{ts,tsx}",
+      "hooks/**/*.{ts,tsx}",
+      "services/**/*.{ts,tsx}",
+      "utils/**/*.{ts,tsx}",
+      "!**/__tests__/**",
+      "!**/index.{ts,tsx}",
+      "!app/_layout.tsx",
+      "!app/(auth)/_layout.tsx",
+      "!app/(tabs)/_layout.tsx"
     ],
     "setupFilesAfterEnv": [
       "@testing-library/jest-native/extend-expect"
