@@ -1,0 +1,248 @@
+:root {
+  --checkia-ink: #111827;
+  --checkia-muted: #566071;
+  --checkia-line: #dde3ed;
+  --checkia-panel: #ffffff;
+  --checkia-soft: #f5f8fc;
+  --checkia-blue: #3047b7;
+  --checkia-blue-deep: #1f2f7f;
+  --checkia-teal: #0f9f8f;
+  --checkia-warm: #f59e0b;
+}
+
+[data-md-color-scheme="slate"] {
+  --checkia-ink: #f8fafc;
+  --checkia-muted: #b8c2d4;
+  --checkia-line: #334155;
+  --checkia-panel: #111827;
+  --checkia-soft: #0f172a;
+}
+
+.md-main__inner {
+  margin-top: 1.35rem;
+}
+
+.md-grid {
+  max-width: 78rem;
+}
+
+.md-content__inner {
+  padding-top: 0;
+}
+
+.checkia-hero {
+  display: grid;
+  grid-template-columns: minmax(22rem, 1fr) minmax(15rem, 18rem);
+  gap: 2rem;
+  align-items: center;
+  margin: 0 0 2.7rem;
+  padding: 2.5rem;
+  border: 1px solid color-mix(in srgb, var(--checkia-line) 80%, transparent);
+  border-radius: 0.85rem;
+  background:
+    linear-gradient(135deg, rgba(48, 71, 183, 0.1), rgba(15, 159, 143, 0.06) 44%, rgba(245, 158, 11, 0.08)),
+    var(--checkia-panel);
+  box-shadow: 0 1.15rem 2.6rem rgba(15, 23, 42, 0.08);
+}
+
+.checkia-hero__icon {
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 0.75rem 1.8rem rgba(48, 71, 183, 0.2);
+}
+
+.checkia-hero h1 {
+  margin: 0;
+  color: var(--checkia-ink);
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1.04;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.checkia-hero__lead {
+  max-width: 42rem;
+  margin: 1rem 0 0;
+  color: var(--checkia-muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.checkia-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.checkia-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0.58rem 0.95rem;
+  border-radius: 0.45rem;
+  font-weight: 700;
+  line-height: 1.2;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.checkia-button:hover {
+  transform: translateY(-1px);
+}
+
+.checkia-button--primary {
+  color: #ffffff !important;
+  background: var(--checkia-blue);
+  box-shadow: 0 0.55rem 1.1rem rgba(48, 71, 183, 0.24);
+}
+
+.checkia-button--secondary {
+  color: var(--checkia-blue) !important;
+  border: 1px solid color-mix(in srgb, var(--checkia-blue) 30%, var(--checkia-line));
+  background: color-mix(in srgb, var(--checkia-panel) 84%, var(--checkia-soft));
+}
+
+.checkia-hero__aside {
+  align-self: stretch;
+  padding: 1.2rem;
+  border: 1px solid var(--checkia-line);
+  border-radius: 0.8rem;
+  background: color-mix(in srgb, var(--checkia-panel) 86%, var(--checkia-soft));
+}
+
+.checkia-hero__aside strong {
+  display: block;
+  color: var(--checkia-ink);
+  font-size: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+.checkia-hero__aside ul {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.checkia-hero__aside li {
+  position: relative;
+  padding-left: 1rem;
+  color: var(--checkia-muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.checkia-hero__aside li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--checkia-teal);
+}
+
+.checkia-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 2rem;
+}
+
+.checkia-card {
+  display: block;
+  min-height: 12rem;
+  padding: 1.1rem;
+  border: 1px solid var(--checkia-line);
+  border-radius: 0.7rem;
+  background: var(--checkia-panel);
+  box-shadow: 0 0.65rem 1.4rem rgba(15, 23, 42, 0.05);
+}
+
+.checkia-card:hover {
+  border-color: color-mix(in srgb, var(--checkia-blue) 48%, var(--checkia-line));
+  box-shadow: 0 0.9rem 1.8rem rgba(15, 23, 42, 0.08);
+}
+
+.checkia-card__label {
+  display: inline-block;
+  margin-bottom: 0.85rem;
+  color: var(--checkia-teal);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.checkia-card strong {
+  display: block;
+  color: var(--checkia-ink);
+  font-size: 1rem;
+}
+
+.checkia-card p {
+  margin: 0.55rem 0 0;
+  color: var(--checkia-muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.md-typeset table:not([class]) {
+  box-shadow: 0 0.5rem 1.5rem rgba(15, 23, 42, 0.05);
+}
+
+.md-typeset table:not([class]) th {
+  background: color-mix(in srgb, var(--checkia-blue) 8%, var(--checkia-panel));
+}
+
+.checkia-diagram {
+  margin: 1.4rem 0 2rem;
+}
+
+.checkia-diagram img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--checkia-line);
+  border-radius: 0.8rem;
+  background: #f8fafc;
+  box-shadow: 0 1rem 2.2rem rgba(15, 23, 42, 0.08);
+}
+
+.checkia-diagram figcaption {
+  margin-top: 0.65rem;
+  color: var(--checkia-muted);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+@media screen and (max-width: 76.1875em) {
+  .checkia-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .checkia-hero__lead {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 44em) {
+  .checkia-hero {
+    padding: 1.2rem;
+    border-radius: 0.7rem;
+  }
+
+  .checkia-hero__actions,
+  .checkia-card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .checkia-button {
+    width: 100%;
+  }
+}
