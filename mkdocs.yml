@@ -1,0 +1,59 @@
+site_name: Check-IA Mobile Documentation
+site_url: https://agentsia223.github.io/checkia-mobile-app/
+site_description: Documentation for Check-IA Mobile, the Expo client for the Check-IA fact-checking platform
+repo_url: https://github.com/agentsia223/checkia-mobile-app
+repo_name: agentsia223/checkia-mobile-app
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Overview: getting-started/index.md
+      - Mobile Setup: getting-started/mobile.md
+      - Environment Variables: getting-started/environment.md
+      - Development Guide: DEVELOPMENT.md
+  - Architecture:
+      - Overview: architecture/index.md
+      - Mobile Client: ARCHITECTURE.md
+      - Backend API Contract: architecture/backend-api.md
+  - Contributing:
+      - Guide: contributing/index.md
+      - Code of Conduct: contributing/code-of-conduct.md
+  - Testing:
+      - Overview: testing/index.md
+      - Mobile Tests: testing/mobile.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+plugins:
+  - search

@@ -7,6 +7,7 @@ Before opening an issue:
 - Search existing issues.
 - Confirm the problem still happens on the latest `develop` branch.
 - Run `npm install` and restart Expo with a cleared cache if the problem is local.
+- Check the [documentation](https://agentsia223.github.io/checkia-mobile-app/) and [development guide](docs/DEVELOPMENT.md).
 
 For security issues, follow [SECURITY.md](SECURITY.md) instead of opening a public issue.
 

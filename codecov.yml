@@ -1,0 +1,28 @@
+coverage:
+  precision: 2
+  round: down
+  range: "60...100"
+  status:
+    project:
+      default:
+        target: 60%
+        threshold: 2%
+    patch:
+      default:
+        target: 50%
+        threshold: 10%
+
+ignore:
+  - "coverage/**"
+  - "node_modules/**"
+  - ".expo/**"
+
+flags:
+  mobile:
+    paths:
+      - app/
+      - components/
+      - constants/
+      - hooks/
+      - services/
+      - utils/
