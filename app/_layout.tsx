@@ -3,10 +3,13 @@ import { useEffect } from 'react';
 import { Stack, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useFonts } from 'expo-font';
 import { onAuthRequired } from '../services/api';
+import { fontAssets } from '../constants/fonts';
 
 export default function RootLayout() {
   const router = useRouter();
+  const [fontsLoaded] = useFonts(fontAssets);
 
   useEffect(() => {
     const unsubscribe = onAuthRequired(() => {
@@ -16,6 +19,10 @@ export default function RootLayout() {
       unsubscribe();
     };
   }, [router]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <SafeAreaProvider>

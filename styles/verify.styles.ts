@@ -22,12 +22,12 @@ export const s = StyleSheet.create({
 
   pageTitle: {
     fontSize: 28, fontWeight: '400', color: P.text,
-    fontFamily: 'InstrumentSerif-Regular', marginTop: 22,
+    fontFamily: 'BarlowSemiCondensed-Bold', marginTop: 22,
     marginBottom: 20, letterSpacing: -0.3, lineHeight: 34,
   },
   pageTitleItalic: {
-    fontStyle: 'italic',
-    fontFamily: 'InstrumentSerif-Italic',
+    
+    fontFamily: 'BarlowSemiCondensed-SemiBold',
     color: P.navy,
   },
 
@@ -38,9 +38,10 @@ export const s = StyleSheet.create({
   tab: {
     flex: 1, flexDirection: 'row', alignItems: 'center',
     justifyContent: 'center', gap: 4, paddingVertical: 8, borderRadius: 8,
+    minHeight: 44,
   },
   tabActive: {
-    backgroundColor: P.white, shadowColor: '#000',
+    backgroundColor: P.white, shadowColor: '#131941',
     shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.06,
     shadowRadius: 3, elevation: 2,
   },
@@ -57,8 +58,8 @@ export const s = StyleSheet.create({
     borderRadius: 16, marginBottom: 20, overflow: 'hidden',
   },
   textarea: {
-    fontSize: 15, lineHeight: 23, color: P.text, padding: 16,
-    minHeight: 150, fontFamily: 'InstrumentSerif-Regular',
+    fontSize: 16, lineHeight: 24, color: P.text, padding: 16,
+    minHeight: 150, fontFamily: 'Barlow-Regular',
   },
   textareaFooter: {
     flexDirection: 'row', alignItems: 'center', gap: 8,
@@ -132,7 +133,7 @@ export const s = StyleSheet.create({
 
   warningBanner: {
     flexDirection: 'row', alignItems: 'flex-start', gap: 10,
-    backgroundColor: P.warningBg, borderWidth: 1, borderColor: '#E8C97A',
+    backgroundColor: P.warningBg, borderWidth: 1, borderColor: '#F6CD8D',
     borderRadius: 12, padding: 14, marginBottom: 16,
   },
   warningText: { flex: 1, fontSize: 12, lineHeight: 18, color: P.warning },
@@ -167,7 +168,7 @@ export const s = StyleSheet.create({
   },
   modeIconWrapDark: { backgroundColor: 'rgba(255,255,255,0.12)' },
   modeIconWrapLight: { backgroundColor: P.surfaceAlt },
-  modeIdentityActive: { backgroundColor: '#EEF1F8' },
+  modeIdentityActive: { backgroundColor: '#ECEEFB' },
   modeTitle: { fontSize: 12, fontWeight: '700', marginBottom: 6, lineHeight: 18, color: P.text },
   modeTitleWhite: { color: P.white },
   modeTitleDark: { color: P.text },
@@ -177,7 +178,7 @@ export const s = StyleSheet.create({
 
   confidentialRow: {
     flexDirection: 'row', alignItems: 'center', gap: 8,
-    backgroundColor: '#EEF1F8', borderRadius: 12, padding: 12, marginBottom: 20,
+    backgroundColor: '#ECEEFB', borderRadius: 12, padding: 12, marginBottom: 20,
   },
   confidentialText: { flex: 1, fontSize: 12, color: P.navy, lineHeight: 17 },
   confidentialStrong: { fontWeight: '700', color: P.navy, textDecorationLine: 'underline' },
@@ -187,12 +188,12 @@ export const s = StyleSheet.create({
     borderRadius: 18, padding: 24, alignItems: 'center', marginBottom: 16,
   },
   recordBtn: {
-    width: 64, height: 64, borderRadius: 32, backgroundColor: '#C94040',
+    width: 64, height: 64, borderRadius: 32, backgroundColor: '#D92D20',
     alignItems: 'center', justifyContent: 'center', marginBottom: 20,
-    shadowColor: '#C94040', shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3, shadowRadius: 8, elevation: 6,
+    shadowColor: '#131941', shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.18, shadowRadius: 8, elevation: 6,
   },
-  recordBtnActive: { backgroundColor: '#7A1A1A' },
+  recordBtnActive: { backgroundColor: '#B42318' },
   waveform: { flexDirection: 'row', alignItems: 'center', gap: 3, height: 40, marginBottom: 12 },
   waveBar: { width: 3, borderRadius: 2, backgroundColor: P.navy },
   audioTimer: { fontSize: 13, color: P.muted, fontWeight: '500' },
@@ -206,7 +207,7 @@ export const s = StyleSheet.create({
     backgroundColor: P.surface, borderWidth: 1, borderColor: P.line,
     borderRadius: 14, padding: 16, marginBottom: 20,
   },
-  importRowActive: { borderColor: P.navy, backgroundColor: '#EEF1F8' },
+  importRowActive: { borderColor: P.navy, backgroundColor: '#ECEEFB' },
   importText: { fontSize: 13, fontWeight: '600', color: P.text },
   importFormats: { fontSize: 11, color: P.muted, marginTop: 2 },
 
@@ -215,7 +216,7 @@ export const s = StyleSheet.create({
     backgroundColor: P.surface, borderWidth: 1.5, borderColor: P.line,
     borderRadius: 14, padding: 16, marginBottom: 10,
   },
-  audioOptionActive: { borderColor: P.navy, backgroundColor: '#EEF1F8' },
+  audioOptionActive: { borderColor: P.navy, backgroundColor: '#ECEEFB' },
   audioOptionLeft: { flexDirection: 'row', alignItems: 'center', flex: 1 },
   audioOptionTitle: { fontSize: 13, fontWeight: '600', color: P.text, marginBottom: 2 },
   audioOptionSub: { fontSize: 12, color: P.muted },
@@ -228,18 +229,21 @@ export const s = StyleSheet.create({
   radioDot: { width: 10, height: 10, borderRadius: 5, backgroundColor: P.navy },
 
   cta: {
-    backgroundColor: P.navy, borderRadius: 16,
+    backgroundColor: P.green, borderRadius: 16,
     paddingVertical: 18, alignItems: 'center', marginTop: 10,
+    minHeight: 56,
+    shadowColor: '#131941', shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.10, shadowRadius: 8, elevation: 3,
   },
   ctaDisabled: { opacity: 0.35 },
-  ctaText: { color: P.white, fontSize: 14, fontWeight: '700', letterSpacing: 0.2 },
+  ctaText: { color: P.white, fontSize: 14, fontWeight: '700', letterSpacing: 0.2, fontFamily: 'Barlow-SemiBold' },
   errorBanner: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     gap: 10,
-    backgroundColor: '#F8E4E4',
+    backgroundColor: '#FDECEB',
     borderWidth: 1,
-    borderColor: '#E7B8B8',
+    borderColor: '#F6B3AB',
     borderRadius: 12,
     padding: 14,
     marginBottom: 12,
@@ -265,14 +269,16 @@ export const as = StyleSheet.create({
   kicker: { fontSize: 11, fontWeight: '700', letterSpacing: 1.4, color: P.navy, marginBottom: 10 },
   titleBlock: {
     fontSize: 34, fontWeight: '400', color: P.text,
-    fontFamily: 'InstrumentSerif-Regular', lineHeight: 42,
+    fontFamily: 'BarlowSemiCondensed-Bold', lineHeight: 42,
     marginBottom: 14, letterSpacing: -0.5,
   },
-  titleItalic: { fontStyle: 'italic', fontFamily: 'InstrumentSerif-Italic', color: P.navy },
+  titleItalic: { fontFamily: 'BarlowSemiCondensed-SemiBold', color: P.navy },
   desc: { fontSize: 13, color: P.muted, lineHeight: 20, marginBottom: 32 },
   stepsList: {
     backgroundColor: P.white, borderWidth: 1, borderColor: P.line,
     borderRadius: 18, overflow: 'hidden',
+    shadowColor: '#131941', shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08, shadowRadius: 3, elevation: 2,
   },
   stepItem: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 18, paddingVertical: 16, gap: 14 },
   stepSeparator: { height: 1, backgroundColor: P.line, marginLeft: 64 },

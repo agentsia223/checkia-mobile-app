@@ -8,18 +8,20 @@ import { TABS, ANALYSIS_STEPS, STEP_TITLES, SOURCES } from '../verify';
 
 describe('Constants Integrity', () => {
   describe('Colors', () => {
-    it('doit contenir les couleurs de base', () => {
+    it('doit contenir les couleurs de base (design system Check-IA)', () => {
       expect(Colors.bg).toBeDefined();
-      expect(Colors.accent).toBeDefined();
-      expect(Colors.true).toBe('#1B6B3C');
-      expect(Colors.false).toBe('#B91C1C');
+      expect(Colors.accent).toBe('#28348A'); // brand navy
+      expect(Colors.green).toBe('#39A935');  // brand green
+      expect(Colors.true).toBe('#2F8C2C');
+      expect(Colors.false).toBe('#D92D20');
     });
 
     it('doit avoir le nouveau système P (Palette)', () => {
-      expect(P.navy).toBe('#1E3A8A');
-      expect(P.vrai).toBe('#1B6B3C');
-      expect(P.faux).toBe('#B91C1C');
-      expect(P.douteux).toBe('#B8860B');
+      expect(P.navy).toBe('#28348A');
+      expect(P.green).toBe('#39A935');
+      expect(P.vrai).toBe('#276F25');
+      expect(P.faux).toBe('#B42318');
+      expect(P.douteux).toBe('#97540A');
     });
   });
 

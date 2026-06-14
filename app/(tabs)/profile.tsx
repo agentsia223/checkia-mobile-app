@@ -70,7 +70,12 @@ export default function Profile() {
           {menu.map((item, i) => (
             <MenuRow key={item.label} item={item} isLast={i === menu.length - 1} />
           ))}
-          <TouchableOpacity style={s.logoutRow} onPress={handleLogout}>
+          <TouchableOpacity
+            style={s.logoutRow}
+            onPress={handleLogout}
+            accessibilityRole="button"
+            accessibilityLabel="Se déconnecter"
+          >
             <Ionicons name="log-out-outline" size={20} color={P.danger} />
             <Text style={s.logoutText}>Se déconnecter</Text>
           </TouchableOpacity>

@@ -8,6 +8,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Input }  from '../../components/ui/Input';
 import { Button } from '../../components/ui/Button';
+import { BrandLogo } from '../../components/brand/BrandLogo';
 import { Colors } from '../../constants/colors';
 import { authAPI } from '../../services/api';
 
@@ -60,12 +61,14 @@ export default function Login() {
           >
             <Ionicons name="arrow-back" size={20} color={Colors.ink} />
           </TouchableOpacity>
-          <Text style={s.meta}>ETAPE 1/1</Text>
+          <View style={s.brandWrap} pointerEvents="none">
+            <BrandLogo variant="wordmark" height={24} />
+          </View>
         </View>
 
         {/* ── Titre ── */}
         <Text style={s.title}>
-          Bon rétour{'\n'}Parmi{' '}
+          Bon retour{'\n'}parmi{' '}
           <Text style={s.titleItalic}>nous.</Text>
         </Text>
         <Text style={s.subtitle}>
@@ -171,25 +174,19 @@ const s = StyleSheet.create({
     fontWeight:    '500',
     color:         Colors.ink,
     letterSpacing: -0.5,
-    fontFamily:    'InstrumentSerif-Regular',
+    fontFamily:    'BarlowSemiCondensed-Bold',
   },
   brandItalic: {
     fontStyle:  'italic',
     color:      Colors.accent,
-    fontFamily: 'InstrumentSerif-Italic',
+    fontFamily: 'BarlowSemiCondensed-SemiBold',
   },
-  meta: {
-    position:      'absolute',
-    left:          0,
-    right:         0,
-    textAlign:     'center',
-    fontFamily: 'Geist-Medium',
-    fontSize: 10.5,
-    lineHeight: 12,
-    letterSpacing: 1.55,
-    textTransform: 'uppercase',
-    color: '#6E7690',
-    includeFontPadding: false,
+  brandWrap: {
+    position:       'absolute',
+    left:           0,
+    right:          0,
+    alignItems:     'center',
+    justifyContent: 'center',
   },
   back: {
     width:          32,
@@ -206,19 +203,19 @@ const s = StyleSheet.create({
     color:         Colors.ink,
     letterSpacing: -0.5,
     marginBottom:  12,
-    fontFamily:    'InstrumentSerif-Regular',
+    fontFamily:    'BarlowSemiCondensed-Bold',
   },
   titleItalic: {
     fontStyle:  'italic',
     color:      Colors.accent,
-    fontFamily: 'InstrumentSerif-Italic',
+    fontFamily: 'BarlowSemiCondensed-SemiBold',
   },
   subtitle: {
     fontSize:     15,
     lineHeight:   23,
     color:        Colors.ink3,
     marginBottom: 28,
-    fontFamily:   'Geist-Regular',
+    fontFamily:   'Barlow-Regular',
   },
 
   // ── Règle ────────────────────────────────────
@@ -241,10 +238,10 @@ const s = StyleSheet.create({
     marginBottom:    20,
   },
   errorBoxText: {
-    color:      Colors.false,
+    color:      Colors.dangerFg,
     fontSize:   13,
     flex:       1,
-    fontFamily: 'Geist-Regular',
+    fontFamily: 'Barlow-Regular',
   },
 
   // ── Mot de passe oublié ──────────────────────
@@ -257,7 +254,7 @@ const s = StyleSheet.create({
     color:         Colors.accent,
     fontSize:      13,
     fontWeight:    '600',
-    fontFamily:    'Geist-SemiBold',
+    fontFamily:    'Barlow-SemiBold',
     letterSpacing: 0.2,
   },
 
@@ -276,7 +273,7 @@ const s = StyleSheet.create({
   divText: {
     color:      Colors.ink3,
     fontSize:   12,
-    fontFamily: 'Geist-Regular',
+    fontFamily: 'Barlow-Regular',
   },
 
   // ── Footer ───────────────────────────────────
@@ -285,12 +282,12 @@ const s = StyleSheet.create({
     color:      Colors.ink3,
     fontSize:   14,
     marginTop:  24,
-    fontFamily: 'Geist-Regular',
+    fontFamily: 'Barlow-Regular',
   },
   footerLink: {
     color:      Colors.accent,
     fontWeight: '700',
-    fontFamily: 'Geist-SemiBold',
+    fontFamily: 'Barlow-SemiBold',
     textDecorationLine: 'underline',
   },
 });

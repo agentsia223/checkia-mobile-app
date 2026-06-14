@@ -1,25 +1,42 @@
 import { View, Text, StyleSheet } from 'react-native';
-import { Colors } from '../../constants/colors';
+import { Ionicons } from '@expo/vector-icons';
+import { VERDICT_CONFIG } from '../../constants/verdict';
+import type { Verdict } from '../../data/homeData';
+import { Fonts } from '../../constants/fonts';
 
-type Verdict = 'VRAI' | 'FAUX' | 'DOUTEUX' | 'INCONNU';
-
-const config: Record<Verdict, { bg: string; tc: string; label: string }> = {
-  VRAI:    { bg: Colors.true,    tc: Colors.bg,    label: '✔  INFORMATION VRAIE' },
-  FAUX:    { bg: Colors.false,   tc: Colors.white, label: '✘  INFORMATION FAUSSE' },
-  DOUTEUX: { bg: Colors.warning, tc: Colors.bg,    label: '⚠  INFORMATION DOUTEUSE' },
-  INCONNU: { bg: Colors.border2, tc: Colors.white, label: '?  NON DÉTERMINÉ' },
+const LONG_LABEL: Record<Verdict, string> = {
+  VRAI:    'Information vraie',
+  FAUX:    'Information fausse',
+  DOUTEUX: 'Information trompeuse',
+  INCONNU: 'Information non vérifiée',
 };
 
+// Solid verdict badge. Color + glyph are always paired (never color alone) and
+// the vocabulary comes from the central verdict config (Vrai/Faux/Trompeur/Non vérifié).
 export function Badge({ verdict }: { verdict: Verdict }) {
-  const { bg, tc, label } = config[verdict];
+  const v = VERDICT_CONFIG[verdict] ?? VERDICT_CONFIG.INCONNU;
   return (
-    <View style={[styles.badge, { backgroundColor: bg }]}>
-      <Text style={[styles.text, { color: tc }]}>{label}</Text>
+    <View style={[styles.badge, { backgroundColor: v.solid }]}>
+      <Ionicons name={v.icon} size={15} color="#FFFFFF" />
+      <Text style={styles.text}>{LONG_LABEL[verdict] ?? LONG_LABEL.INCONNU}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  badge: { paddingHorizontal: 20, paddingVertical: 10, borderRadius: 8, alignSelf: 'center' },
-  text: { fontSize: 13, fontWeight: '800', letterSpacing: 0.5 },
+  badge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 7,
+    paddingHorizontal: 16,
+    paddingVertical: 9,
+    borderRadius: 999,
+    alignSelf: 'center',
+  },
+  text: {
+    color: '#FFFFFF',
+    fontSize: 13,
+    fontFamily: Fonts.bodySemibold,
+    letterSpacing: 0.3,
+  },
 });

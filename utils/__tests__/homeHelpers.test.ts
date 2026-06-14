@@ -79,23 +79,31 @@ describe('homeHelpers Utils', () => {
   });
 
   describe('getVerdictUI', () => {
-    it('retourne les bonnes couleurs et labels pour VRAI', () => {
+    it('retourne le terme canonique et la couleur pour VRAI', () => {
       const ui = getVerdictUI('VRAI');
-      expect(ui.label).toBe('VÉRIFIÉ · VRAI');
+      expect(ui.label).toBe('Vrai');
       expect(ui.color).toBe(P.vrai);
       expect(ui.icon).toBe('checkmark-circle');
     });
 
-    it('retourne les bonnes couleurs et labels pour FAUX', () => {
+    it('retourne le terme canonique et la couleur pour FAUX', () => {
       const ui = getVerdictUI('FAUX');
-      expect(ui.label).toBe('FAUX');
+      expect(ui.label).toBe('Faux');
       expect(ui.color).toBe(P.faux);
+      expect(ui.icon).toBe('close-circle');
     });
 
-    it('retourne DOUTEUX par défaut', () => {
-      const ui = getVerdictUI('AUTRE');
-      expect(ui.label).toBe('DOUTEUX');
+    it('retourne Trompeur pour DOUTEUX', () => {
+      const ui = getVerdictUI('DOUTEUX');
+      expect(ui.label).toBe('Trompeur');
       expect(ui.color).toBe(P.douteux);
+      expect(ui.icon).toBe('warning');
+    });
+
+    it('retourne "Non vérifié" (slate) par défaut', () => {
+      const ui = getVerdictUI('AUTRE');
+      expect(ui.label).toBe('Non vérifié');
+      expect(ui.icon).toBe('information-circle');
     });
   });
 });

@@ -10,6 +10,7 @@ import { factCheckAPI } from '../../services/api';
 import { mapSubmissionToFactCheck } from '../../utils/apiMappers';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
 
+import { BrandBar } from '../../components/brand/BrandBar';
 import { HomeHeader } from '../../components/home/HomeHeader';
 import { HomeHero } from '../../components/home/HomeHero';
 import { HistoryRow } from '../../components/home/HistoryRow';
@@ -41,11 +42,12 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={s.safe}>
-      <StatusBar barStyle="dark-content" />
+    <SafeAreaView style={s.brandSafe} edges={['top']}>
+      <StatusBar barStyle="light-content" backgroundColor={P.navy} />
+      <BrandBar />
       <ScrollView
-        style={s.screen}
-        contentContainerStyle={[s.container, { paddingBottom: 100 }]}
+        style={[s.screen, { backgroundColor: P.bg }]}
+        contentContainerStyle={[s.container, { paddingTop: 22, paddingBottom: 100 }]}
         showsVerticalScrollIndicator={false}
       >
         <HomeHeader name={user.firstName} initials={user.initials} />
@@ -64,8 +66,8 @@ export default function HomeScreen() {
         {loading ? (
           <ActivityIndicator color={P.navy} style={{ marginTop: 20 }} />
         ) : history.length === 0 ? (
-          <Text style={{ color: P.muted, fontSize: 14, marginTop: 12, lineHeight: 21 }}>
-            Aucune vérification pour le moment. Lancez-en une depuis l'onglet Vérifier.
+          <Text style={{ color: P.muted, fontSize: 15, marginTop: 12, lineHeight: 22, fontFamily: 'Barlow-Regular' }}>
+            Aucune vérification pour l'instant. Lancez-en une depuis l'onglet Vérifier.
           </Text>
         ) : (
           history.map((item, i) => (

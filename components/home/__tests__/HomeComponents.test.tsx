@@ -29,7 +29,8 @@ jest.mock('../../../utils/homeHelpers', () => ({
   getVerdictUI: jest.fn((v) => ({
     bg: '#FFF',
     color: '#000',
-    label: v === 'VRAI' ? 'VRAI' : 'FAUX'
+    icon: 'checkmark-circle',
+    label: v === 'VRAI' ? 'Vrai' : 'Faux'
   })),
 }));
 
@@ -52,7 +53,7 @@ describe('Home Module Components', () => {
       const { getByText } = render(<HistoryRow item={mockItem} isLast={false} onPress={() => {}} />);
       expect(getByText('https://test.com')).toBeTruthy();
       expect(getByText('95%')).toBeTruthy();
-      expect(getByText('✓ VRAI')).toBeTruthy();
+      expect(getByText('Vrai')).toBeTruthy();
     });
 
     it('appelle onPress lors du clic sur la ligne', () => {

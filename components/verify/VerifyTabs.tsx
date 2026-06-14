@@ -18,6 +18,9 @@ export default function VerifyTabs({ tab, onChange }: Props) {
           style={[s.tab, tab === item.key && s.tabActive]}
           onPress={() => onChange(item.key)}
           activeOpacity={0.8}
+          accessibilityRole="tab"
+          accessibilityState={{ selected: tab === item.key }}
+          accessibilityLabel={item.label}
         >
           <Ionicons name={item.icon} size={13} color={tab === item.key ? P.navy : P.muted} />
           <Text style={[s.tabText, tab === item.key && s.tabTextActive]}>

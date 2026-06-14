@@ -14,6 +14,9 @@ export default function VerifyNavbar({ onBack }: Props) {
         style={s.navCircleBtn}
         onPress={onBack}
         testID="back-button"
+        accessibilityRole="button"
+        accessibilityLabel="Retour"
+        hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
       >
         <Ionicons name="arrow-back" size={18} color={P.text} />
       </TouchableOpacity>

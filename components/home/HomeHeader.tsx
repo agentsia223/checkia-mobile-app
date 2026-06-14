@@ -21,7 +21,12 @@ export const HomeHeader = ({ name, initials }: Props) => {
           <Text style={s.hello}>{greeting}</Text>
           <Text style={s.sub}>Que vérifions-nous aujourd'hui ?</Text>
         </View>
-        <TouchableOpacity style={s.avatar} onPress={() => router.push('/profile')}>
+        <TouchableOpacity
+          style={s.avatar}
+          onPress={() => router.push('/profile')}
+          accessibilityRole="button"
+          accessibilityLabel="Mon profil"
+        >
           <Text style={s.avatarText}>{initials}</Text>
         </TouchableOpacity>
       </View>

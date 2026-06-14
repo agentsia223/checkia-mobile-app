@@ -1,5 +1,5 @@
 // app/(tabs)/verify.tsx
-import { ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StatusBar, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -8,6 +8,8 @@ import VerifyImageTab from '../../components/verify/VerifyImageTab';
 import VerifyNavbar from '../../components/verify/VerifyNavbar';
 import VerifyTabs from '../../components/verify/VerifyTabs';
 import VerifyTextTab from '../../components/verify/VerifyTextTab';
+import { Button } from '../../components/ui/Button';
+import { Alert as InlineAlert } from '../../components/ui/Alert';
 import { useVerify } from '../../hooks/useVerify';
 import { s } from '../../styles/verify.styles';
 import { P } from '../../constants/colors';
@@ -65,23 +67,20 @@ export default function Verify() {
             )}
 
             {!!vm.error && (
-              <View style={s.errorBanner}>
-                <Ionicons name="alert-circle-outline" size={16} color={P.danger} />
-                <Text style={s.errorText}>{vm.error}</Text>
+              <View style={{ marginBottom: 12 }}>
+                <InlineAlert tone="danger">{vm.error}</InlineAlert>
               </View>
             )}
 
-            <TouchableOpacity
-              style={[s.cta, !vm.canAnalyze() && s.ctaDisabled]}
+            <Button
+              label={vm.ctaLabel()}
               onPress={vm.handleAnalyze}
+              variant="accent"
+              size="lg"
+              fullWidth
               disabled={!vm.canAnalyze()}
-              activeOpacity={0.88}
-            >
-              <View style={s.ctaInner}>
-                <Text style={s.ctaText}>{vm.ctaLabel()}</Text>
-                <Ionicons name="arrow-forward" size={18} color={P.white} />
-              </View>
-            </TouchableOpacity>
+              iconRight={<Ionicons name="arrow-forward" size={18} color={P.white} />}
+            />
           </ScrollView>
         </SafeAreaView>
       )}

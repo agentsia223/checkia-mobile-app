@@ -3,12 +3,16 @@ import { StyleSheet, Platform } from 'react-native';
 import { P } from '../constants/colors';
 
 export const s = StyleSheet.create({
-  safe: { 
-    flex: 1, 
-    backgroundColor: P.bg 
+  safe: {
+    flex: 1,
+    backgroundColor: P.bg
   },
-  screen: { 
-    flex: 1 
+  brandSafe: {
+    flex: 1,
+    backgroundColor: P.navy,
+  },
+  screen: {
+    flex: 1
   },
   container: { 
     paddingHorizontal: 22, 
@@ -33,7 +37,7 @@ export const s = StyleSheet.create({
   hello: { 
     fontSize: 32,
     color: P.text, 
-    fontFamily: 'InstrumentSerif-Regular',
+    fontFamily: 'BarlowSemiCondensed-Bold',
     lineHeight: 34
   },
   sub: { 
@@ -69,13 +73,13 @@ export const s = StyleSheet.create({
   heroTitle: { 
     fontSize: 28,
     color: P.white, 
-    fontFamily: 'InstrumentSerif-Regular', 
+    fontFamily: 'BarlowSemiCondensed-Bold', 
     marginBottom: 10,
     lineHeight: 30
   },
   heroItalic: { 
-    fontStyle: 'italic', 
-    fontFamily: 'InstrumentSerif-Italic' 
+    
+    fontFamily: 'BarlowSemiCondensed-SemiBold' 
   },
   heroSub: { 
     fontSize: 13,
@@ -106,7 +110,7 @@ export const s = StyleSheet.create({
   },
   statValue: { 
     fontSize: 28,
-    fontFamily: 'InstrumentSerif-Regular',
+    fontFamily: 'BarlowSemiCondensed-Bold',
     marginBottom: 2
   },
   statLabel: { 
@@ -121,19 +125,20 @@ export const s = StyleSheet.create({
   },
   sectionTitle: { 
     fontSize: 24,
-    fontFamily: 'InstrumentSerif-Regular', 
+    fontFamily: 'BarlowSemiCondensed-Bold', 
     color: P.text 
   },
   sectionCount: {
     fontSize: 14,
     color: P.muted,
     marginLeft: 8,
-    fontFamily: 'System'
+    fontFamily: 'Barlow-Regular'
   },
-  sectionLink: { 
-    fontSize: 13, 
-    fontWeight: '600', 
-    color: P.navy 
+  sectionLink: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: P.navy,
+    fontFamily: 'Barlow-SemiBold'
   },
   listItem: { 
     flexDirection: 'row', 
@@ -147,7 +152,7 @@ export const s = StyleSheet.create({
     width: 36, 
     height: 36, 
     borderRadius: 10, 
-    backgroundColor: '#E9E1CF', 
+    backgroundColor: '#EEF0F5', 
     alignItems: 'center', 
     justifyContent: 'center', 
     marginRight: 12 
@@ -155,24 +160,31 @@ export const s = StyleSheet.create({
   listBody: { 
     flex: 1 
   },
-  pill: { 
-    alignSelf: 'flex-start', 
-    borderRadius: 999, 
-    paddingHorizontal: 10, 
-    paddingVertical: 4, 
-    marginBottom: 8 
+  pill: {
+    alignSelf: 'flex-start',
+    borderRadius: 999,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    marginBottom: 8
   },
-  pillText: { 
-    fontSize: 10, 
-    fontWeight: '800' 
+  pillRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
   },
-  listTitle: { 
+  pillText: {
+    fontSize: 11,
+    fontWeight: '800',
+    letterSpacing: 0.3,
+    fontFamily: 'Barlow-SemiBold',
+  },
+  listTitle: {
     fontSize: 16,
-    color: P.text, 
-    fontFamily: 'System',
+    color: P.text,
+    fontFamily: 'Barlow-Medium',
     fontWeight: '500',
     marginBottom: 5,
-    lineHeight: 20
+    lineHeight: 21
   },
   metaText: { 
     fontSize: 12, 

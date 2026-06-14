@@ -8,6 +8,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Input }  from '../../components/ui/Input';
 import { Button } from '../../components/ui/Button';
+import { BrandLogo } from '../../components/brand/BrandLogo';
 import { Colors } from '../../constants/colors';
 import { authAPI } from '../../services/api';
 
@@ -119,10 +120,9 @@ export default function ForgotPassword() {
           >
             <Ionicons name="arrow-back" size={20} color={Colors.ink} />
           </TouchableOpacity>
-          <Text style={s.brand}>
-            Check<Text style={s.brandItalic}>·IA</Text>
-          </Text>
-          <Text style={s.meta}>BAMAKO · 2026</Text>
+          <View style={s.brandWrap} pointerEvents="none">
+            <BrandLogo variant="wordmark" height={22} />
+          </View>
         </View>
 
         {/* ── Titre ── */}
@@ -233,7 +233,7 @@ const s = StyleSheet.create({
   // ── Header ──────────────────────────────────
   header: {
     flexDirection: 'row',
-    alignItems:    'baseline',
+    alignItems:    'center',
     marginBottom:  40,
     gap:           12,
   },
@@ -241,24 +241,28 @@ const s = StyleSheet.create({
     marginRight: 4,
     marginBottom: 2,
   },
+  brandWrap: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   brand: {
     fontSize:      28,
     fontWeight:    '500',
     color:         Colors.ink,
     letterSpacing: -0.5,
-    fontFamily:    'InstrumentSerif-Regular',
+    fontFamily:    'BarlowSemiCondensed-Bold',
     flex:          1,
   },
   brandItalic: {
     fontStyle:  'italic',
     color:      Colors.accent,
-    fontFamily: 'InstrumentSerif-Italic',
+    fontFamily: 'BarlowSemiCondensed-SemiBold',
   },
   meta: {
     fontSize:      10,
     letterSpacing: 2,
     color:         Colors.ink3,
-    fontFamily:    'Geist-Regular',
+    fontFamily:    'Barlow-Regular',
     fontWeight:    '500',
   },
 
@@ -270,19 +274,19 @@ const s = StyleSheet.create({
     color:         Colors.ink,
     letterSpacing: -0.5,
     marginBottom:  12,
-    fontFamily:    'InstrumentSerif-Regular',
+    fontFamily:    'BarlowSemiCondensed-Bold',
   },
   titleItalic: {
     fontStyle:  'italic',
     color:      Colors.accent,
-    fontFamily: 'InstrumentSerif-Italic',
+    fontFamily: 'BarlowSemiCondensed-SemiBold',
   },
   subtitle: {
     fontSize:     15,
     lineHeight:   23,
     color:        Colors.ink3,
     marginBottom: 28,
-    fontFamily:   'Geist-Regular',
+    fontFamily:   'Barlow-Regular',
   },
 
   // ── Règle ────────────────────────────────────
@@ -305,10 +309,10 @@ const s = StyleSheet.create({
     marginBottom:    20,
   },
   errorBoxText: {
-    color:      Colors.false,
+    color:      Colors.dangerFg,
     fontSize:   13,
     flex:       1,
-    fontFamily: 'Geist-Regular',
+    fontFamily: 'Barlow-Regular',
   },
 
   // ── Info / Note ──────────────────────────────
@@ -324,7 +328,7 @@ const s = StyleSheet.create({
     fontSize:   12,
     lineHeight: 18,
     color:      Colors.ink3,
-    fontFamily: 'Geist-Regular',
+    fontFamily: 'Barlow-Regular',
   },
   noteWrap: {
     flexDirection:   'row',
@@ -340,14 +344,14 @@ const s = StyleSheet.create({
     fontSize:   13,
     lineHeight: 19,
     color:      Colors.accent,
-    fontFamily: 'Geist-Regular',
+    fontFamily: 'Barlow-Regular',
   },
 
   // ── Email highlight ───────────────────────────
   emailHighlight: {
     color:      Colors.accent,
     fontWeight: '600',
-    fontFamily: 'Geist-SemiBold',
+    fontFamily: 'Barlow-SemiBold',
   },
 
   // ── Retour login ─────────────────────────────
@@ -363,7 +367,7 @@ const s = StyleSheet.create({
     color:      Colors.accent,
     fontSize:   14,
     fontWeight: '600',
-    fontFamily: 'Geist-SemiBold',
+    fontFamily: 'Barlow-SemiBold',
   },
 
   // ── Footer ───────────────────────────────────
@@ -372,12 +376,12 @@ const s = StyleSheet.create({
     color:      Colors.ink3,
     fontSize:   14,
     marginTop:  16,
-    fontFamily: 'Geist-Regular',
+    fontFamily: 'Barlow-Regular',
   },
   footerLink: {
     color:               Colors.accent,
     fontWeight:          '700',
-    fontFamily:          'Geist-SemiBold',
+    fontFamily:          'Barlow-SemiBold',
     textDecorationLine:  'underline',
   },
 });
