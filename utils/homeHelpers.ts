@@ -1,5 +1,5 @@
 // utils/homeHelpers.ts
-import { P } from '../constants/colors';
+import { getVerdict } from '../constants/verdict';
 
 export const getDayLabel = () => {
   const days = ['DIMANCHE','LUNDI','MARDI','MERCREDI','JEUDI','VENDREDI','SAMEDI'];
@@ -43,10 +43,9 @@ export const formatRowTimestamp = (dateStr: string) => {
   return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
 };
 
+// Verdict presentation for list pills — sourced from the central verdict config
+// so vocabulary (Vrai/Faux/Trompeur/Non vérifié), color and glyph stay consistent.
 export const getVerdictUI = (verdict: string) => {
-  switch (verdict) {
-    case 'VRAI': return { label: 'VÉRIFIÉ · VRAI', color: P.vrai, bg: P.vraiBg, icon: 'checkmark-circle' as any };
-    case 'FAUX': return { label: 'FAUX', color: P.faux, bg: P.fauxBg, icon: 'close' as any };
-    default:     return { label: 'DOUTEUX', color: P.douteux, bg: P.douteuxBg, icon: 'alert' as any };
-  }
+  const v = getVerdict(verdict);
+  return { label: v.label, color: v.fg, bg: v.bg, icon: v.icon };
 };

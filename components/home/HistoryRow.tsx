@@ -14,22 +14,23 @@ export const HistoryRow = ({ item, isLast, onPress }: any) => {
   const ui = getVerdictUI(item.verdict);
   const icon = getHistoryIcon(item.input_type, item.raw_input);
   const sourceLabel = item.source || (item.input_type ? item.input_type.toUpperCase() : 'TEXTE');
-  const verdictText = item.verdict === 'VRAI'
-    ? '✓ VRAI'
-    : item.verdict === 'FAUX'
-      ? '× FAUX'
-      : ui.label;
 
   return (
-    <TouchableOpacity style={[s.listItem, !isLast && s.listBorder]} onPress={onPress}>
+    <TouchableOpacity
+      style={[s.listItem, !isLast && s.listBorder]}
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`${ui.label} · ${item.raw_input}`}
+    >
       <View style={s.listIconWrap}>
         <Ionicons name={icon as any} size={17} color={P.muted} />
       </View>
 
       <View style={s.listBody}>
-        <View style={[s.pill, { backgroundColor: ui.bg }]}>
+        <View style={[s.pill, s.pillRow, { backgroundColor: ui.bg }]}>
+          <Ionicons name={ui.icon as any} size={12} color={ui.color} />
           <Text style={[s.pillText, { color: ui.color }]}>
-            {verdictText}
+            {ui.label}
           </Text>
         </View>
 

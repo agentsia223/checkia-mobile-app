@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     marginBottom:   8,
     letterSpacing:  1.4,
     textTransform:  'uppercase',
-    fontFamily:     'Geist-SemiBold',
+    fontFamily:     'Barlow-SemiBold',
     fontWeight:     '600',
   },
   inputWrap: {
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   inputWrapFocused: {
     borderColor:     Colors.accent,
-    backgroundColor: '#FDFCFA',
+    backgroundColor: Colors.accentSoft,
   },
   inputWrapError: {
     borderColor: Colors.false,
@@ -111,12 +111,12 @@ const styles = StyleSheet.create({
     color:       Colors.text,
     fontSize:    15,
     paddingVertical: 14,
-    fontFamily:  'Geist-Regular',
+    fontFamily:  'Barlow-Regular',
   },
   error: {
-    color:       Colors.false,
+    color:       Colors.dangerFg,
     fontSize:    12,
     marginTop:   6,
-    fontFamily:  'Geist-Regular',
+    fontFamily:  'Barlow-Regular',
   },
 });

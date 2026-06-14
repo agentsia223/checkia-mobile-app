@@ -16,6 +16,8 @@ export const MenuRow = ({ item, isLast }: { item: MenuItem; isLast: boolean }) =
     activeOpacity={0.7}
     onPress={item.onPress}
     disabled={!item.onPress}
+    accessibilityRole="button"
+    accessibilityLabel={item.value ? `${item.label} : ${item.value}` : item.label}
   >
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 14 }}>
       <Ionicons name={item.icon} size={20} color={P.text} />

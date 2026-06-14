@@ -288,7 +288,7 @@ const s = StyleSheet.create({
     color:         Colors.ink,
     letterSpacing: -0.5,
     marginBottom:  28,
-    fontFamily:    'InstrumentSerif-Regular',
+    fontFamily:    'BarlowSemiCondensed-Bold',
   },
 
   // ── Erreur ───────────────────────────────────
@@ -304,7 +304,7 @@ const s = StyleSheet.create({
     marginBottom:    20,
   },
   errorBoxText: {
-    color:      Colors.false,
+    color:      Colors.dangerFg,
     fontSize:   13,
     flex:       1,
   },

@@ -67,12 +67,13 @@ describe('Result Screen', () => {
     expect(queryByText('INDICE DE CONFIANCE')).toBeNull();
   });
 
-  it('affiche le panneau de statut avec titre et chip (mirroir du web)', async () => {
+  it('affiche le panneau de statut avec titre et le verdict canonique (Vrai)', async () => {
     const { getByText } = render(<ResultScreen />);
 
     await waitFor(() => {
-      expect(getByText('Information Vérifiée')).toBeTruthy();
-      expect(getByText('Fiable')).toBeTruthy();
+      expect(getByText('Information vérifiée')).toBeTruthy();
+      // Le chip surface le terme canonique du système de verdict, pas une formule marketing.
+      expect(getByText('Vrai')).toBeTruthy();
     });
   });
 

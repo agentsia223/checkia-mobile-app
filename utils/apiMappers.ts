@@ -1,5 +1,15 @@
 import { FactCheck, Verdict } from '../data/homeData';
 import { ImageVerification, Submission } from '../services/api';
+import { VERDICT_CONFIG } from '../constants/verdict';
+
+export type ResultSource = {
+  name: string;
+  date?: string;
+  desc: string;
+  url?: string;
+  domain?: string;
+  rank?: number;
+};
 
 export type ResultViewModel = {
   id: string;
@@ -13,29 +23,24 @@ export type ResultViewModel = {
   scoreLabel?: string;
   claim: string;
   analysis: string;
-  sources: Array<{
-    name: string;
-    date?: string;
-    desc: string;
-    url?: string;
-  }>;
+  sources: ResultSource[];
 };
 
 const TEXT_STATUS_PRESETS: Record<string, { title: string; chip: string; description: string }> = {
   vérifié: {
-    title: 'Information Vérifiée',
+    title: 'Information vérifiée',
     chip: 'Fiable',
     description: 'Cette information a été vérifiée et est considérée comme fiable selon nos analyses approfondies.',
   },
   rejeté: {
-    title: 'Information Douteuse',
-    chip: 'Non Fiable',
+    title: 'Information fausse',
+    chip: 'Non fiable',
     description: 'Cette information a été identifiée comme potentiellement fausse ou trompeuse après vérification.',
   },
   'en cours': {
-    title: 'Vérification en Cours',
-    chip: 'En Analyse',
-    description: 'Vérification en cours, notre IA analyse les sources disponibles…',
+    title: 'Vérification en cours',
+    chip: 'En analyse',
+    description: 'Vérification en cours… nous consultons des sources fiables.',
   },
 };
 
@@ -109,13 +114,15 @@ export const formatReportDate = (value?: string | null) =>
 export const mapSubmissionStatusToVerdict = (status?: string): Verdict => {
   if (status === 'vérifié') return 'VRAI';
   if (status === 'rejeté') return 'FAUX';
-  return 'DOUTEUX';
+  // Pending / unknown results are "Non vérifié" rather than mis-shown as Trompeur.
+  return 'INCONNU';
 };
 
 export const mapImageStatusToVerdict = (status?: string): Verdict => {
   if (status === 'VRAIE' || status === 'AUTHENTIQUE') return 'VRAI';
-  if (status === 'FAUSSE' || status === 'IA_DÉTECTÉE' || status === 'ERREUR') return 'FAUX';
-  return 'DOUTEUX';
+  if (status === 'FAUSSE' || status === 'IA_DÉTECTÉE') return 'FAUX';
+  // INCERTAIN / INDÉTERMINÉE / ANALYSÉE / EN_COURS / ERREUR → not verified.
+  return 'INCONNU';
 };
 
 export const scoreLabel = (score: number) => {
@@ -124,16 +131,24 @@ export const scoreLabel = (score: number) => {
   return 'FAIBLE';
 };
 
+const sourceDomain = (source: any): string | undefined => {
+  if (source?.domain) return String(source.domain).replace(/^www\./, '');
+  if (source?.url) {
+    try {
+      return new URL(source.url).hostname.replace(/^www\./, '');
+    } catch {
+      return undefined;
+    }
+  }
+  return undefined;
+};
+
 const sourceName = (source: any) => {
   if (source?.title) return source.title;
   if (source?.name) return source.name;
-  if (source?.url) {
-    try {
-      return new URL(source.url).hostname;
-    } catch {
-      return source.url;
-    }
-  }
+  const domain = sourceDomain(source);
+  if (domain) return domain;
+  if (source?.url) return source.url;
   return String(source ?? 'Source');
 };
 
@@ -157,21 +172,28 @@ export const mapImageToFactCheck = (verification: ImageVerification): FactCheck 
 });
 
 export const mapSubmissionToResult = (submission: Submission): ResultViewModel => {
-  const sources = (submission.web_sources ?? []).map((source: any) => ({
+  const sources = (submission.web_sources ?? []).map((source: any, i: number) => ({
     name: sourceName(source),
+    domain: sourceDomain(source),
+    rank: i + 1,
     desc: source?.snippet || source?.description || source?.content || source?.url || 'Source utilisée pour la vérification.',
     url: source?.url,
   }));
   const preset = textStatusPreset(submission.statut);
+  const verdict = mapSubmissionStatusToVerdict(submission.statut);
+  const rawScore = (submission as any).confidence ?? (submission as any).score;
+  const hasScore = typeof rawScore === 'number';
 
   return {
     id: String(submission.id),
     date: formatReportDate(submission.date),
-    verdict: mapSubmissionStatusToVerdict(submission.statut),
+    verdict,
     statusTitle: preset.title,
-    statusChip: preset.chip,
+    statusChip: VERDICT_CONFIG[verdict].label,
     statusDescription: preset.description,
-    hasConfidence: false,
+    hasConfidence: hasScore,
+    score: hasScore ? rawScore : undefined,
+    scoreLabel: hasScore ? scoreLabel(rawScore) : undefined,
     claim: submission.texte,
     analysis: submission.detailed_result || preset.description,
     sources,
@@ -182,12 +204,14 @@ export const mapImageToResult = (verification: ImageVerification): ResultViewMod
   const score = verification.confidence ?? 0;
   const preset = imageStatusPreset(verification.status);
 
+  const verdict = mapImageStatusToVerdict(verification.status);
+
   return {
     id: `image-${verification.id}`,
     date: formatReportDate(verification.date),
-    verdict: mapImageStatusToVerdict(verification.status),
+    verdict,
     statusTitle: preset.title,
-    statusChip: preset.chip,
+    statusChip: VERDICT_CONFIG[verdict].label,
     statusDescription: preset.description,
     hasConfidence: true,
     score,
@@ -195,7 +219,7 @@ export const mapImageToResult = (verification: ImageVerification): ResultViewMod
     claim: verification.claim_text || verification.original_filename || 'Image importée',
     analysis: verification.explanation || preset.description,
     sources: verification.image_url
-      ? [{ name: verification.original_filename || 'Image', desc: verification.image_url, url: verification.image_url }]
+      ? [{ name: verification.original_filename || 'Image', rank: 1, desc: verification.image_url, url: verification.image_url }]
       : [],
   };
 };

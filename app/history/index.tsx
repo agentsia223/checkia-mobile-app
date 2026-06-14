@@ -8,17 +8,17 @@ import { mapSubmissionToFactCheck } from '../../utils/apiMappers';
 import { formatRowTimestamp } from '../../utils/homeHelpers';
 
 const palette = {
-  bg: '#F7F3E9',
-  paperLight: '#FCFAF2',
-  ink: '#0F1E3D',
-  ink2: '#2A3657',
-  ink3: '#6B7493',
-  ink4: '#A8ADBE',
-  rule: '#E2DDCB',
-  accent: '#1E3A8A',
+  bg: '#F7F8FB',
+  paperLight: '#FFFFFF',
+  ink: '#131941',
+  ink2: '#2C3047',
+  ink3: '#7C8398',
+  ink4: '#A3AABF',
+  rule: '#E0E3EC',
+  accent: '#28348A',
 
-  green: '#5F7F67',
-  greenBg: '#D6E6D8',
+  green: '#276F25',
+  greenBg: '#EDF8EC',
 };
 
 const ITEMS_PER_PAGE = 5;
@@ -63,6 +63,9 @@ export default function History() {
           onPress={() => router.back()}
           activeOpacity={0.85}
           testID="back-button"
+          accessibilityRole="button"
+          accessibilityLabel="Retour"
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         >
           <Ionicons name="arrow-back" size={18} color={palette.ink} />
         </TouchableOpacity>
@@ -85,7 +88,7 @@ export default function History() {
         <ActivityIndicator color={palette.accent} style={{ marginTop: 24 }} />
       ) : items.length === 0 ? (
         <Text style={styles.empty}>
-          Aucun fait vérifié pour le moment. Lancez une vérification depuis l'onglet Vérifier.
+          Aucun fait vérifié pour l'instant. Lancez une vérification depuis l'onglet Vérifier.
         </Text>
       ) : (
         (() => {
@@ -113,6 +116,8 @@ export default function History() {
                       style={[styles.row, index !== pageItems.length - 1 && styles.rowBorder]}
                       activeOpacity={0.85}
                       onPress={() => navigateToResult(item)}
+                      accessibilityRole="button"
+                      accessibilityLabel={`Vrai · ${item.raw_input}`}
                     >
                       <View style={styles.rowTop}>
                         <View style={styles.metaLeft}>
@@ -154,6 +159,9 @@ export default function History() {
                     disabled={safePage === 1}
                     onPress={() => setPage((p) => Math.max(1, p - 1))}
                     style={[styles.pageBtn, safePage === 1 && styles.pageBtnDisabled]}
+                    accessibilityRole="button"
+                    accessibilityLabel="Page précédente"
+                    accessibilityState={{ disabled: safePage === 1 }}
                   >
                     <Ionicons name="chevron-back" size={14} color={palette.ink} />
                     <Text style={styles.pageBtnText}>Précédent</Text>
@@ -163,6 +171,9 @@ export default function History() {
                     disabled={safePage === totalPages}
                     onPress={() => setPage((p) => Math.min(totalPages, p + 1))}
                     style={[styles.pageBtn, safePage === totalPages && styles.pageBtnDisabled]}
+                    accessibilityRole="button"
+                    accessibilityLabel="Page suivante"
+                    accessibilityState={{ disabled: safePage === totalPages }}
                   >
                     <Text style={styles.pageBtnText}>Suivant</Text>
                     <Ionicons name="chevron-forward" size={14} color={palette.ink} />
@@ -195,18 +206,18 @@ const styles = StyleSheet.create({
     marginBottom: 26,
   },
   iconBtn: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     borderWidth: 1,
     borderColor: palette.rule,
-    backgroundColor: '#FAF7F0',
+    backgroundColor: palette.paperLight,
     alignItems: 'center',
     justifyContent: 'center',
   },
   iconBtnSpacer: {
-    width: 34,
-    height: 34,
+    width: 40,
+    height: 40,
   },
   topTitle: {
     fontSize: 12,

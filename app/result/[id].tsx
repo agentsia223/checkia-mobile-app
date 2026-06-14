@@ -2,33 +2,38 @@
 import {
   ActivityIndicator,
   View, Text, StyleSheet, TouchableOpacity,
-  ScrollView, SafeAreaView, StatusBar, Share, Linking,
+  ScrollView, StatusBar, Share, Linking,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
 import { factCheckAPI, imageVerificationAPI } from '../../services/api';
 import { ResultViewModel, mapImageToResult, mapSubmissionToResult } from '../../utils/apiMappers';
+import { getVerdict } from '../../constants/verdict';
+import { ConfidenceMeter } from '../../components/ui/ConfidenceMeter';
+import { SourceCard } from '../../components/ui/SourceCard';
+import { Alert as InlineAlert } from '../../components/ui/Alert';
 
 // ── Palette exacte storyboard ─────────────────────
 const P = {
-  bg:         '#F7F3E9',
-  surface:    '#FCFAF2',
-  surfaceAlt: '#EEE8D6',
+  bg:         '#F7F8FB',
+  surface:    '#FFFFFF',
+  surfaceAlt: '#EEF0F5',
   white:      '#FFFFFF',
-  text:       '#0F1E3D',
-  muted:      '#6B7493',
-  line:       '#E2DDCB',
-  navy:       '#1E3A8A',
-  navyDark:   '#10275A',
-  green:      '#1B6B3C',
-  greenLight: '#EBF4EF',
-  greenBorder:'#A8D5BA',
-  greenBar:   '#2D8A55',
-  red:        '#B91C1C',
-  warning:    '#B8860B',
-  warningBg:  '#FDF8E7',
-  warningLine:'#E8C97A',
+  text:       '#131941',
+  muted:      '#7C8398',
+  line:       '#E0E3EC',
+  navy:       '#28348A',
+  navyDark:   '#212C74',
+  green:      '#276F25',
+  greenLight: '#EDF8EC',
+  greenBorder:'#A9DFA6',
+  greenBar:   '#39A935',
+  red:        '#B42318',
+  warning:    '#97540A',
+  warningBg:  '#FDF4E7',
+  warningLine:'#F6CD8D',
 };
 
 export default function ResultScreen() {
@@ -72,20 +77,13 @@ export default function ResultScreen() {
 
   const RESULT = result;
 
-  const verdictColor =
-    RESULT?.verdict === 'VRAI'   ? P.green   :
-    RESULT?.verdict === 'FAUX'   ? P.red     :
-    P.warning;
-
-  const verdictBg =
-    RESULT?.verdict === 'VRAI'   ? '#F0FDF4' :
-    RESULT?.verdict === 'FAUX'   ? '#FEF2F2' :
-    '#FEFBEB';
-
-  const verdictIcon: keyof typeof Ionicons.glyphMap =
-    RESULT?.verdict === 'VRAI'   ? 'shield-checkmark' :
-    RESULT?.verdict === 'FAUX'   ? 'warning' :
-    'hourglass-outline';
+  // Single source of truth: color + glyph + the canonical four-outcome system.
+  const v = getVerdict(RESULT?.verdict);
+  const verdictFg = v.fg;        // text / titles on soft surface
+  const verdictSolid = v.solid;  // solid surfaces (icon circle, chip, bar)
+  const verdictBg = v.bg;        // soft panel background
+  const verdictBorder = v.border;
+  const verdictIcon = v.icon;
 
   const handleShare = async () => {
     if (!RESULT) return;
@@ -104,27 +102,34 @@ export default function ResultScreen() {
   };
 
   return (
-    <SafeAreaView style={s.safe}>
-      <StatusBar barStyle="dark-content" backgroundColor={P.bg} />
+    <View style={s.root}>
+      <StatusBar barStyle="light-content" backgroundColor={P.navy} />
 
-      {/* ── Header ── */}
-      <View style={s.header}>
-        <TouchableOpacity
-          style={s.circleBtn}
-          onPress={() => router.back()}
-          testID="back-button"
-        >
-          <Ionicons name="arrow-back" size={16} color={P.text} />
-        </TouchableOpacity>
-        <Text style={s.headerMeta}>{RESULT?.date ?? ''}</Text>
-        <View style={s.circleBtnSpacer} />
-      </View>
+      {/* ── Navy app bar (flush under the status bar) ── */}
+      <SafeAreaView style={s.headerSafe} edges={['top']}>
+        <View style={s.header}>
+          <TouchableOpacity
+            style={s.circleBtn}
+            onPress={() => router.back()}
+            testID="back-button"
+            accessibilityRole="button"
+            accessibilityLabel="Retour"
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            <Ionicons name="arrow-back" size={20} color="#FFFFFF" />
+          </TouchableOpacity>
+          <Text style={s.headerTitle}>Résultat</Text>
+          <View style={s.circleBtnSpacer} />
+        </View>
+      </SafeAreaView>
 
       <ScrollView
         style={s.scroll}
         contentContainerStyle={s.content}
         showsVerticalScrollIndicator={false}
       >
+        {RESULT?.date ? <Text style={s.dateMeta}>{RESULT.date}</Text> : null}
+
         {loading && (
           <View style={s.stateBox}>
             <ActivityIndicator color={P.navy} />
@@ -133,10 +138,7 @@ export default function ResultScreen() {
         )}
 
         {!!error && !loading && (
-          <View style={s.disclaimer}>
-            <Ionicons name="warning-outline" size={15} color={P.warning} />
-            <Text style={s.disclaimerText}>{error}</Text>
-          </View>
+          <InlineAlert tone="danger">{error}</InlineAlert>
         )}
 
         {!loading && RESULT && (
@@ -145,52 +147,39 @@ export default function ResultScreen() {
         <View
           style={[
             s.statusPanel,
-            { borderColor: verdictColor, backgroundColor: verdictBg },
+            { borderColor: verdictBorder, backgroundColor: verdictBg },
           ]}
+          accessibilityLabel={`Verdict : ${RESULT.statusChip}. ${RESULT.statusTitle}`}
         >
-          <View style={[s.statusIconCircle, { backgroundColor: verdictColor }]}>
-            <Ionicons name={verdictIcon} size={26} color={P.white} />
+          <View style={[s.statusIconCircle, { backgroundColor: verdictSolid }]}>
+            <Ionicons name={verdictIcon} size={28} color={P.white} />
           </View>
-          <Text style={[s.statusTitle, { color: verdictColor }]}>
+          <Text style={[s.statusTitle, { color: verdictFg }]}>
             {RESULT.statusTitle}
           </Text>
-          <View style={[s.statusChip, { backgroundColor: verdictColor }]}>
+          <View style={[s.statusChip, { backgroundColor: verdictSolid }]}>
             <Text style={s.statusChipText}>{RESULT.statusChip}</Text>
           </View>
           <Text style={s.statusDescription}>{RESULT.statusDescription}</Text>
         </View>
 
-        {/* ── Barre de confiance (uniquement quand le backend fournit un score réel) ── */}
+        {/* ── Indice de confiance (quand un score réel est disponible) ── */}
         {RESULT.hasConfidence && RESULT.score !== undefined && (
           <View style={s.scoreSection}>
-            <View style={s.scoreRow}>
-              <Text style={s.scoreLabelText}>INDICE DE CONFIANCE</Text>
-              <Text style={[s.scoreLevel, { color: verdictColor }]}>
-                {RESULT.scoreLabel}
-              </Text>
-            </View>
-            <View style={s.barTrack}>
-              <View style={[
-                s.barFill,
-                { width: `${RESULT.score}%` as any, backgroundColor: verdictColor },
-              ]} />
-            </View>
-            <View style={s.barEndRow}>
-              <Text style={s.barEnd}>0</Text>
-              <Text style={[s.barCenter, { color: verdictColor }]}>
-                {RESULT.score}%
-              </Text>
-              <Text style={s.barEnd}>100</Text>
-            </View>
+            <ConfidenceMeter
+              value={RESULT.score}
+              verdict={RESULT.verdict}
+              levelLabel={RESULT.scoreLabel}
+            />
           </View>
         )}
 
         {/* ── L'affirmation vérifiée ── */}
         <Text style={s.sectionLabel}>— L'AFFIRMATION VÉRIFIÉE</Text>
 
-        {/* Card avec bordure gauche verte + ombre + fond crème-vert */}
+        {/* Card avec bordure gauche colorée + ombre + fond teinté verdict */}
         <View style={s.claimCard}>
-          <View style={[s.claimBorderLeft, { backgroundColor: verdictColor }]} />
+          <View style={[s.claimBorderLeft, { backgroundColor: verdictSolid }]} />
           <Text style={s.claimText}>{RESULT.claim}</Text>
         </View>
 
@@ -206,78 +195,60 @@ export default function ResultScreen() {
         </Text>
         <View style={s.sourcesList}>
           {RESULT.sources.length === 0 ? (
-            <Text style={s.sourceDesc}>Aucune source externe disponible pour ce rapport.</Text>
+            <Text style={s.sourceEmpty}>Aucune source externe disponible pour ce rapport.</Text>
           ) : RESULT.sources.map((src, i) => (
-            <View key={`${src.name}-${i}`}>
-              <TouchableOpacity
-                style={s.sourceRow}
-                activeOpacity={0.75}
-                onPress={() => openSource(src.url)}
-                disabled={!src.url}
-              >
-                <View style={[s.sourceCheck, { backgroundColor: P.greenLight }]}>
-                  <Ionicons name="checkmark" size={13} color={verdictColor} />
-                </View>
-
-                <View style={s.sourceText}>
-                  <Text style={[s.sourceName, { color: verdictColor }]}>
-                    {src.name}
-                  </Text>
-                  <Text style={s.sourceDesc} numberOfLines={2}>
-                    {src.desc}
-                  </Text>
-                </View>
-
-                <View style={s.sourceRight}>
-                  <Text style={s.sourceDate}>{src.date}</Text>
-                  {src.url ? (
-                    <Ionicons name="open-outline" size={13} color={P.muted} />
-                  ) : null}
-                </View>
-              </TouchableOpacity>
-
-              {i < RESULT.sources.length - 1 && (
-                <View style={s.sourceSep} />
-              )}
-            </View>
+            <SourceCard
+              key={`${src.name}-${i}`}
+              rank={src.rank ?? i + 1}
+              name={src.name}
+              domain={src.domain}
+              date={src.date}
+              snippet={src.desc}
+              url={src.url}
+              onPress={() => openSource(src.url)}
+              isLast={i === RESULT.sources.length - 1}
+            />
           ))}
         </View>
 
         {/* ── Bannière disclaimer ── */}
-        <View style={s.disclaimer}>
-          <Ionicons name="warning-outline" size={15} color={P.warning} />
-          <Text style={s.disclaimerText}>
-            Résultat généré par IA — à considérer comme indicatif, non définitif.
-          </Text>
-        </View>
+        <InlineAlert tone="warning">
+          Résultat généré par IA — à considérer comme indicatif, non définitif.
+        </InlineAlert>
 
         <View style={{ height: 100 }} />
           </>
         )}
       </ScrollView>
 
-      {/* ── Barre d'actions fixe en bas ── */}
+      {/* ── Barre d'actions fixe en bas (avec marge de sécurité) ── */}
       {RESULT && (
-        <View style={s.actionBar}>
-          <TouchableOpacity
-            style={s.btnPrimary}
-            activeOpacity={0.85}
-            onPress={handleShare}
-          >
-            <Ionicons name="share-outline" size={16} color={P.white} />
-            <Text style={s.btnPrimaryText}>Partager le rapport</Text>
-          </TouchableOpacity>
-        </View>
+        <SafeAreaView style={s.actionSafe} edges={['bottom']}>
+          <View style={s.actionBar}>
+            <TouchableOpacity
+              style={s.btnPrimary}
+              activeOpacity={0.85}
+              onPress={handleShare}
+              accessibilityRole="button"
+              accessibilityLabel="Partager le rapport"
+            >
+              <Ionicons name="share-outline" size={16} color={P.white} />
+              <Text style={s.btnPrimaryText}>Partager le rapport</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 
 // ── Styles ───────────────────────────────────────
 const s = StyleSheet.create({
-  safe:    { flex: 1, backgroundColor: P.bg },
-  scroll:  { flex: 1 },
-  content: { paddingHorizontal: 22, paddingTop: 20, paddingBottom: 24 },
+  root:    { flex: 1, backgroundColor: P.bg },
+  headerSafe: { backgroundColor: P.navy },
+  actionSafe: { backgroundColor: P.bg },
+  scroll:  { flex: 1, backgroundColor: P.bg },
+  content: { paddingHorizontal: 22, paddingTop: 18, paddingBottom: 24 },
   stateBox: {
     minHeight: 180,
     alignItems: 'center',
@@ -290,29 +261,34 @@ const s = StyleSheet.create({
     fontWeight: '600',
   },
 
-  // Header
+  // Navy app bar
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: P.line,
-    backgroundColor: P.bg,
+    paddingHorizontal: 14,
+    paddingVertical: 14,
+    backgroundColor: P.navy,
   },
   circleBtn: {
-    width: 34, height: 34, borderRadius: 17,
-    borderWidth: 1, borderColor: P.line,
-    backgroundColor: P.surface,
+    width: 40, height: 40, borderRadius: 20,
     alignItems: 'center', justifyContent: 'center',
   },
   circleBtnSpacer: {
-    width: 34, height: 34,
+    width: 40, height: 40,
   },
-  headerMeta: {
-    fontSize: 11, fontWeight: '600',
-    letterSpacing: 0.8, color: P.muted,
+  headerTitle: {
+    fontSize: 19,
+    fontFamily: 'BarlowSemiCondensed-Bold',
+    color: '#FFFFFF',
+    letterSpacing: 0.2,
+  },
+  dateMeta: {
+    fontSize: 11.5,
+    fontFamily: 'IBMPlexMono-Regular',
+    letterSpacing: 0.4,
+    color: P.muted,
+    marginBottom: 14,
   },
 
   // Status panel (mirror web SubmitFact / AIImageDetection)
@@ -334,13 +310,15 @@ const s = StyleSheet.create({
     marginBottom: 12,
   },
   statusTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    fontSize: 24,
+    fontFamily: 'BarlowSemiCondensed-Bold',
     marginBottom: 10,
     textAlign: 'center',
     letterSpacing: -0.2,
   },
   statusChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingHorizontal: 14,
     paddingVertical: 5,
     borderRadius: 999,
@@ -348,14 +326,15 @@ const s = StyleSheet.create({
   },
   statusChipText: {
     color: '#FFFFFF',
-    fontSize: 12,
-    fontWeight: '700',
+    fontSize: 13,
+    fontFamily: 'Barlow-SemiBold',
     letterSpacing: 0.4,
   },
   statusDescription: {
-    fontSize: 13,
-    lineHeight: 19,
+    fontSize: 15,
+    lineHeight: 22,
     color: P.text,
+    fontFamily: 'Barlow-Regular',
     textAlign: 'center',
   },
 
@@ -405,14 +384,14 @@ const s = StyleSheet.create({
   // ── Claim card : fond crème-vert + bordure gauche verte + ombre ──
   claimCard: {
     flexDirection: 'row',
-    backgroundColor: '#F0F7F3',       // fond légèrement vert-crème
+    backgroundColor: '#EDF8EC',       // fond vert très clair (green-50)
     borderWidth: 1,
-    borderColor: '#C5E0CE',           // bordure vert clair
+    borderColor: '#A9DFA6',           // bordure vert clair (green-200)
     borderRadius: 14,
     marginBottom: 24,
     overflow: 'hidden',
-    // Ombre exacte maquette
-    shadowColor: '#1B6B3C',
+    // Ombre navy-teintée
+    shadowColor: '#131941',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.10,
     shadowRadius: 8,
@@ -426,22 +405,22 @@ const s = StyleSheet.create({
   },
   claimText: {
     flex: 1,
-    fontSize: 14,
-    lineHeight: 22,
+    fontSize: 16,
+    lineHeight: 23,
     color: P.text,
-    fontStyle: 'italic',
-    fontFamily: 'InstrumentSerif-Italic',
+    fontFamily: 'BarlowSemiCondensed-SemiBold',
     paddingHorizontal: 14,
     paddingVertical: 16,
   },
 
   // Analyse
   analyseText: {
-    fontSize: 14, lineHeight: 22,
+    fontSize: 15, lineHeight: 23,
     color: P.text, marginBottom: 28,
+    fontFamily: 'Barlow-Regular',
   },
   analyseBold: {
-    fontWeight: '700',
+    fontFamily: 'Barlow-SemiBold',
     color: P.text,
     textDecorationLine: 'underline',
   },
@@ -452,6 +431,16 @@ const s = StyleSheet.create({
     borderWidth: 1, borderColor: P.line,
     borderRadius: 16, overflow: 'hidden',
     marginBottom: 20,
+    shadowColor: '#131941',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  sourceEmpty: {
+    fontSize: 14, color: P.muted, lineHeight: 20,
+    fontFamily: 'Barlow-Regular',
+    paddingHorizontal: 16, paddingVertical: 16,
   },
   sourceRow: {
     flexDirection: 'row',

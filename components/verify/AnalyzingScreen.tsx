@@ -18,10 +18,16 @@ export default function AnalyzingScreen({ step, onClose }: Props) {
   return (
     <View style={[as.safe, { paddingBottom: 0 }]}>
       <View style={[as.header, { paddingTop: 40 }]}>
-        <TouchableOpacity style={as.closeBtn} onPress={onClose}>
+        <TouchableOpacity
+          style={as.closeBtn}
+          onPress={onClose}
+          accessibilityRole="button"
+          accessibilityLabel="Annuler la vérification"
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        >
           <Text style={as.closeBtnText}>✕</Text>
         </TouchableOpacity>
-        <Text style={as.headerTitle}>ANALYSE EN COURS</Text>
+        <Text style={as.headerTitle}>VÉRIFICATION EN COURS</Text>
         <View style={{ width: 34 }} />
       </View>
 

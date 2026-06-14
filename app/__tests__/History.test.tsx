@@ -106,7 +106,7 @@ describe('History Screen (verified-only)', () => {
     const { getByText } = render(<History />);
 
     await waitFor(() => {
-      expect(getByText(/Aucun fait vérifié pour le moment/)).toBeTruthy();
+      expect(getByText(/Aucun fait vérifié pour l'instant/)).toBeTruthy();
     });
   });
 

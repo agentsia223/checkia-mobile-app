@@ -8,16 +8,16 @@ import { Ionicons } from '@expo/vector-icons';
 
 // ── Palette exacte storyboard ─────────────────────
 const P = {
-  bg:         '#F7F3E9',
-  surface:    '#FCFAF2',
-  surfaceAlt: '#EEE8D6',
+  bg:         '#F7F8FB',
+  surface:    '#FFFFFF',
+  surfaceAlt: '#EEF0F5',
   white:      '#FFFFFF',
-  text:       '#0F1E3D',
-  muted:      '#6B7493',
-  line:       '#E2DDCB',
-  navy:       '#1E3A8A',
-  navyDark:   '#10275A',
-  pullBg:     '#EEF1F8',   // fond pull-quote légèrement bleuté
+  text:       '#131941',
+  muted:      '#7C8398',
+  line:       '#E0E3EC',
+  navy:       '#28348A',
+  navyDark:   '#212C74',
+  pullBg:     '#ECEEFB',   // fond pull-quote bleuté (navy-50)
 };
 
 export default function Article() {
@@ -29,7 +29,13 @@ export default function Article() {
 
       {/* ── Header ── */}
       <View style={s.header}>
-        <TouchableOpacity style={s.circleBtn} onPress={() => router.back()}>
+        <TouchableOpacity
+          style={s.circleBtn}
+          onPress={() => router.back()}
+          accessibilityRole="button"
+          accessibilityLabel="Retour"
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        >
           <Ionicons name="arrow-back" size={16} color={P.text} />
         </TouchableOpacity>
 
@@ -85,7 +91,7 @@ export default function Article() {
           <View style={s.pullBorderLeft} />
           <View style={{ flex: 1 }}>
             <Text style={s.pullText}>
-              {'\u00AB\u00A0Une fausse nouvelle voyage six fois plus vite qu\'une information vérifiée.\u00A0\u00BB'}
+              {'\u00AB Une fausse nouvelle voyage six fois plus vite qu\'une information vérifiée. \u00BB'}
             </Text>
             <Text style={s.pullAttrib}>— MIT MEDIA LAB, 2018</Text>
           </View>
@@ -98,7 +104,7 @@ export default function Article() {
 
         {/* ── Corps section ── */}
         <Text style={s.body}>
-          Le site a-t-il des mentions légales\u00A0? Un domaine récent\u00A0? Une orthographe imitant un média connu\u00A0? Ces indices ne trompent presque jamais.
+          Le site a-t-il des mentions légales ? Un domaine récent ? Une orthographe imitant un média connu ? Ces indices ne trompent presque jamais.
         </Text>
 
         <View style={{ height: 100 }} />
@@ -126,13 +132,13 @@ const s = StyleSheet.create({
     backgroundColor: P.bg,
   },
   circleBtn: {
-    width: 34, height: 34, borderRadius: 17,
+    width: 40, height: 40, borderRadius: 20,
     borderWidth: 1, borderColor: P.line,
     backgroundColor: P.surface,
     alignItems: 'center', justifyContent: 'center',
   },
   circleBtnSpacer: {
-    width: 34, height: 34,
+    width: 40, height: 40,
   },
   headerTitle: {
     fontSize: 11, fontWeight: '700',
@@ -150,23 +156,23 @@ const s = StyleSheet.create({
   titleBlock: {
     fontSize: 36,
     fontWeight: '400',
-    fontFamily: 'InstrumentSerif-Regular',
+    fontFamily: 'BarlowSemiCondensed-Bold',
     color: P.text,
     lineHeight: 42,
     letterSpacing: -0.5,
     marginBottom: 14,
   },
   titleItalic: {
-    fontStyle: 'italic',
-    fontFamily: 'InstrumentSerif-Italic',
+    
+    fontFamily: 'BarlowSemiCondensed-SemiBold',
     color: P.navy,
   },
 
   // Sous-titre
   subtitle: {
     fontSize: 15,
-    fontStyle: 'italic',
-    fontFamily: 'InstrumentSerif-Italic',
+    
+    fontFamily: 'BarlowSemiCondensed-SemiBold',
     color: P.muted,
     lineHeight: 22,
     marginBottom: 20,
@@ -218,7 +224,7 @@ const s = StyleSheet.create({
   dropCap: {
     fontSize: 52,
     lineHeight: 48,
-    fontFamily: 'InstrumentSerif-Regular',
+    fontFamily: 'BarlowSemiCondensed-Bold',
     fontWeight: '400',
     color: P.navy,
   },
@@ -241,8 +247,8 @@ const s = StyleSheet.create({
   },
   pullText: {
     fontSize: 16,
-    fontStyle: 'italic',
-    fontFamily: 'InstrumentSerif-Italic',
+    
+    fontFamily: 'BarlowSemiCondensed-SemiBold',
     color: P.navy,
     lineHeight: 24,
     marginBottom: 10,
@@ -259,7 +265,7 @@ const s = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: '400',
-    fontFamily: 'InstrumentSerif-Regular',
+    fontFamily: 'BarlowSemiCondensed-Bold',
     color: P.text,
     marginBottom: 14,
     letterSpacing: -0.3,

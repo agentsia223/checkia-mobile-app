@@ -10,19 +10,20 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { BrandLogo } from '../../components/brand/BrandLogo';
 
 const COLORS = {
-  bg: '#F7F3E9',
-  surface: '#ECE7DA',
-  border: '#DED7C8',
-  text: '#0F1E3D',
-  textSoft: '#6B7493',
-  textMuted: '#8D94A8',
-  accent: '#1E3A8A',
-  button: '#0F2554',
+  bg: '#F7F8FB',
+  surface: '#EEF0F5',
+  border: '#E0E3EC',
+  text: '#131941',
+  textSoft: '#7C8398',
+  textMuted: '#A3AABF',
+  accent: '#28348A',
+  button: '#28348A',
   white: '#FFFFFF',
-  dotIdle: '#DDD8CC',
-  home: '#B8B6AF',
+  dotIdle: '#C7CCDA',
+  home: '#A3AABF',
 };
 
 const FEATURES = [
@@ -43,10 +44,7 @@ export default function OnboardingScreen() {
         </View>
 
         <View style={styles.brandWrap}>
-          <Text style={styles.brand}>
-            <Text style={styles.brandCheck}>Check</Text>
-            <Text style={styles.brandIA}>·IA</Text>
-          </Text>
+          <BrandLogo variant="wordmark" height={34} />
         </View>
 
         <View style={styles.kickerRow}>
@@ -132,22 +130,22 @@ const styles = StyleSheet.create({
   },
 
   headerMetaLeft: {
-    fontFamily: 'Geist-Medium',
+    fontFamily: 'Barlow-Medium',
     fontSize: 10.5,
     lineHeight: 12,
     letterSpacing: 1.55,
     textTransform: 'uppercase',
-    color: '#6E7690',
+    color: '#7C8398',
     includeFontPadding: false,
   },
 
   headerMetaRight: {
-    fontFamily: 'Geist-Medium',
+    fontFamily: 'Barlow-Medium',
     fontSize: 10.5,
     lineHeight: 12,
     letterSpacing: 1.55,
     textTransform: 'uppercase',
-    color: '#6E7690',
+    color: '#7C8398',
     includeFontPadding: false,
   },
 
@@ -160,7 +158,7 @@ const styles = StyleSheet.create({
   },
 
   brandCheck: {
-    fontFamily: 'InstrumentSerif-Regular',
+    fontFamily: 'BarlowSemiCondensed-Bold',
     fontSize: 34,
     lineHeight: 36,
     letterSpacing: -0.45,
@@ -168,7 +166,7 @@ const styles = StyleSheet.create({
   },
 
   brandIA: {
-    fontFamily: 'InstrumentSerif-Italic',
+    fontFamily: 'BarlowSemiCondensed-SemiBold',
     fontSize: 34,
     lineHeight: 36,
     letterSpacing: -0.45,
@@ -184,16 +182,16 @@ const styles = StyleSheet.create({
   kickerLine: {
     width: 16,
     height: 1.5,
-    backgroundColor: '#6E7690',
+    backgroundColor: '#7C8398',
     marginRight: 8,
   },
 
   kicker: {
-    fontFamily: 'Geist-SemiBold',
+    fontFamily: 'Barlow-SemiBold',
     fontSize: 10.5,
     lineHeight: 12,
     letterSpacing: 1.7,
-    color: '#6E7690',
+    color: '#7C8398',
     textTransform: 'uppercase',
     includeFontPadding: false,
   },
@@ -203,7 +201,7 @@ const styles = StyleSheet.create({
   },
 
   titleLine: {
-    fontFamily: 'InstrumentSerif-Regular',
+    fontFamily: 'BarlowSemiCondensed-Bold',
     fontSize: 43,
     lineHeight: 47,
     letterSpacing: -1.25,
@@ -212,7 +210,7 @@ const styles = StyleSheet.create({
   },
 
   titleItalic: {
-    fontFamily: 'InstrumentSerif-Italic',
+    fontFamily: 'BarlowSemiCondensed-SemiBold',
     fontSize: 43,
     lineHeight: 47,
     letterSpacing: -1.25,
@@ -221,11 +219,11 @@ const styles = StyleSheet.create({
   },
 
   description: {
-    fontFamily: 'Geist-Regular',
+    fontFamily: 'Barlow-Regular',
     fontSize: 14,
     lineHeight: 21.5,
     letterSpacing: -0.1,
-    color: '#525E78',
+    color: '#5B6175',
     marginBottom: 34,
     includeFontPadding: false,
   },
@@ -249,7 +247,7 @@ const styles = StyleSheet.create({
 
   featureLabel: {
     marginTop: 7,
-    fontFamily: 'Geist-Medium',
+    fontFamily: 'Barlow-Medium',
     fontSize: 11.5,
     lineHeight: 13,
     color: COLORS.text,
@@ -294,7 +292,7 @@ const styles = StyleSheet.create({
   },
 
   ctaText: {
-    fontFamily: 'Geist-SemiBold',
+    fontFamily: 'Barlow-SemiBold',
     fontSize: 15.5,
     lineHeight: 18,
     color: COLORS.white,
@@ -307,7 +305,7 @@ const styles = StyleSheet.create({
   },
 
   loginText: {
-    fontFamily: 'Geist-Regular',
+    fontFamily: 'Barlow-Regular',
     fontSize: 12.5,
     lineHeight: 16,
     color: COLORS.textMuted,
@@ -315,7 +313,7 @@ const styles = StyleSheet.create({
   },
 
   loginLink: {
-    fontFamily: 'Geist-SemiBold',
+    fontFamily: 'Barlow-SemiBold',
     color: COLORS.text,
     textDecorationLine: 'underline',
   },

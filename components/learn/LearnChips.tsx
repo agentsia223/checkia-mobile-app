@@ -10,7 +10,13 @@ export const LearnChips = ({ activeIndex = 0 }) => (
     contentContainerStyle={s.chipsRow}
   >
     {CHIPS.map((chip, i) => (
-      <TouchableOpacity key={chip} style={[s.chip, i === activeIndex && s.chipActive]}>
+      <TouchableOpacity
+        key={chip}
+        style={[s.chip, i === activeIndex && s.chipActive]}
+        accessibilityRole="tab"
+        accessibilityState={{ selected: i === activeIndex }}
+        accessibilityLabel={chip}
+      >
         <Text style={[s.chipText, i === activeIndex && s.chipTextActive]}>{chip}</Text>
       </TouchableOpacity>
     ))}
